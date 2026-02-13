@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Will You Be My Valentine? 💕</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ffeef8 0%, #ffe5f3 25%, #fff0f8 50%, #ffe8f5 75%, #fff5fa 100%);
+            padding: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        html {
+            height: -webkit-fill-available;
+        }
+
+        /* Floating Hearts Background Animation */
+        .heart-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 30px;
+            opacity: 0.3;
+            animation: float-up 8s infinite ease-in;
+            will-change: transform, opacity;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Main Card Container */
+        .container {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(255, 182, 193, 0.4);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            border: 3px solid rgba(255, 192, 203, 0.3);
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* Heart Icon */
+        .heart-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: heartbeat 1.5s infinite;
+            line-height: 1;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            10%, 30% {
+                transform: scale(1.1);
+            }
+            20%, 40% {
+                transform: scale(1);
+            }
+        }
+
+        /* Typography */
+        h1 {
+            color: #ff69b4;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.2);
+            line-height: 1.2;
+        }
+
+        .subheading {
+            color: #ff1493;
+            font-size: 1.3em;
+            margin-bottom: 40px;
+            font-style: italic;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        /* Button Container */
+        .button-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Button Styles */
+        .btn {
+            padding: 18px 45px;
+            font-size: 1.2em;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* YES Button */
+        .btn-yes {
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+        }
+
+        .btn-yes:hover,
+        .btn-yes:active {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.4);
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
+        }
+
+        /* NO Button */
+        .btn-no {
+            background: linear-gradient(135deg, #ffc0cb, #ffb6c1);
+            color: #ff1493;
+        }
+
+        .btn-no:hover,
+        .btn-no:active {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.4);
+            background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
+        }
+
+        /* Button Ripple Effect */
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before,
+        .btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Sparkles Animation */
+        .sparkle {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .sparkle-item {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #ffb6c1;
+            border-radius: 50%;
+            animation: sparkle 2s infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Tablet Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 45px 35px;
+                max-width: 450px;
+            }
+
+            h1 {
+                font-size: 2.2em;
+            }
+
+            .subheading {
+                font-size: 1.2em;
+                margin-bottom: 35px;
+            }
+
+            .heart-icon {
+                font-size: 70px;
+            }
+
+            .btn {
+                padding: 16px 40px;
+                font-size: 1.15em;
+            }
+        }
+
+        /* Mobile Responsive Design */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 35px 25px;
+                border-radius: 25px;
+                max-width: 100%;
+            }
+
+            h1 {
+                font-size: 1.8em;
+                margin-bottom: 12px;
+            }
+
+            .subheading {
+                font-size: 1.1em;
+                margin-bottom: 30px;
+            }
+
+            .heart-icon {
+                font-size: 60px;
+                margin-bottom: 15px;
+            }
+
+            .btn {
+                padding: 15px 35px;
+                font-size: 1.1em;
+                width: 100%;
+                max-width: 280px;
+            }
+
+            .button-container {
+                flex-direction: column;
+                gap: 15px;
+                align-items: center;
+            }
+
+            .floating-heart {
+                font-size: 24px;
+            }
+        }
+
+        /* Small Mobile Devices */
+        @media (max-width: 400px) {
+            .container {
+                padding: 30px 20px;
+                border-radius: 20px;
+            }
+
+            h1 {
+                font-size: 1.6em;
+            }
+
+            .subheading {
+                font-size: 1em;
+                margin-bottom: 25px;
+            }
+
+            .heart-icon {
+                font-size: 50px;
+            }
+
+            .btn {
+                padding: 14px 30px;
+                font-size: 1em;
+            }
+
+            .floating-heart {
+                font-size: 20px;
+            }
+        }
+
+        /* Extra Small Devices */
+        @media (max-width: 320px) {
+            .container {
+                padding: 25px 15px;
+            }
+
+            h1 {
+                font-size: 1.4em;
+            }
+
+            .subheading {
+                font-size: 0.95em;
+            }
+
+            .heart-icon {
+                font-size: 45px;
+            }
+
+            .btn {
+                padding: 12px 25px;
+                font-size: 0.95em;
+            }
+        }
+
+        /* Landscape Mode for Mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 20px 30px;
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+
+            .heart-icon {
+                font-size: 40px;
+                margin-bottom: 10px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+                margin-bottom: 8px;
+            }
+
+            .subheading {
+                font-size: 1em;
+                margin-bottom: 20px;
+            }
+
+            .btn {
+                padding: 12px 30px;
+                font-size: 1em;
+            }
+
+            .button-container {
+                flex-direction: row;
+                gap: 15px;
+            }
+        }
+
+        /* Touch device optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .btn:active {
+                transform: translateY(-3px) scale(1.03);
+            }
+        }
+
+        /* Dark mode support (optional) */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: linear-gradient(135deg, #2d1b25 0%, #3d1f31 25%, #2d1f28 50%, #3d2130 75%, #2d1d26 100%);
+            }
+
+            .container {
+                background: rgba(40, 20, 30, 0.95);
+                border-color: rgba(255, 105, 180, 0.3);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Hearts Background -->
+    <div class="heart-bg" id="heartBg"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Heart Icon -->
+        <div class="heart-icon">💖</div>
+
+        <!-- Main Heading -->
+        <h1>Will you be my valentine</h1>
+
+        <!-- Subheading -->
+        <p class="subheading">na krke tu dekh</p>
+
+        <!-- Buttons -->
+        <div class="button-container">
+            <a href="yes.html" class="btn btn-yes">
+                <span>YES 💕</span>
+            </a>
+            <a href="no.html" class="btn btn-no">
+                <span>NO 💔</span>
+            </a>
+        </div>
+
+        <!-- Sparkles Container -->
+        <div class="sparkle" id="sparkles"></div>
+    </div>
+
+    <script>
+        // Detect if device is mobile
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+        // Create floating hearts in background
+        function createFloatingHearts() {
+            const heartBg = document.getElementById('heartBg');
+            const hearts = ['💖', '💕', '💗', '💓', '💝', '❤️'];
+            
+            // Reduce frequency on mobile for better performance
+            const interval = isMobile ? 1200 : 800;
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('floating-heart');
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                
+                // Adjust heart size based on screen width
+                const maxSize = window.innerWidth < 600 ? 25 : 30;
+                const minSize = window.innerWidth < 600 ? 15 : 20;
+                heart.style.fontSize = (Math.random() * (maxSize - minSize) + minSize) + 'px';
+                
+                heartBg.appendChild(heart);
+
+                // Remove heart after animation
+                setTimeout(() => {
+                    heart.remove();
+                }, 8000);
+            }, interval);
+        }
+
+        // Create sparkles around the card
+        function createSparkles() {
+            const sparkleContainer = document.getElementById('sparkles');
+            
+            // Reduce sparkles on mobile
+            const sparkleCount = isMobile ? 12 : 20;
+            
+            for (let i = 0; i < sparkleCount; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle-item');
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 2 + 's';
+                sparkleContainer.appendChild(sparkle);
+            }
+        }
+
+        // Add button click/touch effect
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Prevent double-tap zoom on mobile
+                e.preventDefault();
+                
+                // Create ripple effect
+                const ripple = document.createElement('div');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+                ripple.style.width = ripple.style.height = '100px';
+                
+                // Get click/touch position
+                const rect = this.getBoundingClientRect();
+                const x = (e.clientX || e.touches?.[0]?.clientX || rect.left + rect.width / 2) - rect.left;
+                const y = (e.clientY || e.touches?.[0]?.clientY || rect.top + rect.height / 2) - rect.top;
+                
+                ripple.style.left = x - 50 + 'px';
+                ripple.style.top = y - 50 + 'px';
+                ripple.style.animation = 'ripple 0.6s ease-out';
+                this.appendChild(ripple);
+
+                setTimeout(() => ripple.remove(), 600);
+                
+                // Navigate after animation
+                setTimeout(() => {
+                    window.location.href = this.href;
+                }, 300);
+            });
+        });
+
+        // Prevent iOS zoom on double tap
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+        // Initialize animations
+        createFloatingHearts();
+        createSparkles();
+
+        // Handle orientation change
+        window.addEventListener('orientationchange', function() {
+            // Reload sparkles on orientation change
+            const sparkleContainer = document.getElementById('sparkles');
+            sparkleContainer.innerHTML = '';
+            setTimeout(createSparkles, 300);
+        });
+    </script>
+</body>
+</html>
