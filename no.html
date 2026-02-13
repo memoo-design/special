@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Wrong Choice! 😤</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            height: -webkit-fill-available;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 25%, #ffd1dc 50%, #ffb6c1 75%, #ffc0cb 100%);
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated Background Elements */
+        .bg-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .emoji-float {
+            position: absolute;
+            font-size: 40px;
+            opacity: 0.2;
+            animation: float-around 10s infinite ease-in-out;
+            will-change: transform;
+        }
+
+        @keyframes float-around {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(50px, -50px) rotate(90deg);
+            }
+            50% {
+                transform: translate(100px, 0) rotate(180deg);
+            }
+            75% {
+                transform: translate(50px, 50px) rotate(270deg);
+            }
+        }
+
+        /* Main Card Container */
+        .container {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 60px 50px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.5);
+            text-align: center;
+            max-width: 550px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            border: 3px solid rgba(255, 105, 180, 0.4);
+            animation: shake-in 0.6s ease-in-out;
+        }
+
+        @keyframes shake-in {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            10%, 30%, 50%, 70%, 90% {
+                transform: translateX(-10px);
+            }
+            20%, 40%, 60%, 80% {
+                transform: translateX(10px);
+            }
+        }
+
+        /* Emoji Icon */
+        .emoji-icon {
+            font-size: 90px;
+            margin-bottom: 25px;
+            animation: angry-bounce 1s infinite;
+            line-height: 1;
+        }
+
+        @keyframes angry-bounce {
+            0%, 100% {
+                transform: scale(1) rotate(0deg);
+            }
+            25% {
+                transform: scale(1.1) rotate(-5deg);
+            }
+            50% {
+                transform: scale(1.15) rotate(0deg);
+            }
+            75% {
+                transform: scale(1.1) rotate(5deg);
+            }
+        }
+
+        /* Typography */
+        h1 {
+            color: #ff1493;
+            font-size: clamp(1.8rem, 6vw, 2.8rem);
+            margin-bottom: 20px;
+            font-weight: 800;
+            text-shadow: 3px 3px 6px rgba(255, 20, 147, 0.3);
+            animation: color-pulse 2s infinite;
+            line-height: 1.2;
+        }
+
+        @keyframes color-pulse {
+            0%, 100% {
+                color: #ff1493;
+            }
+            50% {
+                color: #ff69b4;
+            }
+        }
+
+        .subheading {
+            color: #ff69b4;
+            font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+            margin-bottom: 15px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .funny-text {
+            color: #666;
+            font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+            margin-bottom: 40px;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #fff0f5, #ffe4e1);
+            border: 2px dashed #ff69b4;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 35px;
+            animation: glow 2s infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(255, 105, 180, 0.6);
+            }
+        }
+
+        .warning-text {
+            color: #ff1493;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            font-weight: 600;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .consequence {
+            color: #ff69b4;
+            font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+            line-height: 1.5;
+        }
+
+        /* Button Styles */
+        .btn {
+            padding: 20px 60px;
+            font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 8px 25px rgba(255, 20, 147, 0.3);
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #ff1493, #ff69b4, #ff1493);
+            background-size: 200% 200%;
+            color: white;
+            animation: gradient-shift 3s ease infinite;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .btn:hover,
+        .btn:active {
+            transform: translateY(-8px) scale(1.08);
+            box-shadow: 0 15px 40px rgba(255, 20, 147, 0.5);
+            animation: gradient-shift 1s ease infinite, wiggle 0.5s ease infinite;
+        }
+
+        @keyframes wiggle {
+            0%, 100% {
+                transform: translateY(-8px) scale(1.08) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-8px) scale(1.08) rotate(-2deg);
+            }
+            75% {
+                transform: translateY(-8px) scale(1.08) rotate(2deg);
+            }
+        }
+
+        /* Button Text Animation */
+        .btn span {
+            position: relative;
+            z-index: 1;
+            display: inline-block;
+        }
+
+        /* Confetti Effect */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #ff69b4;
+            animation: confetti-fall 3s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Back Link */
+        .back-link {
+            margin-top: 30px;
+            display: block;
+        }
+
+        .back-link a {
+            color: #ff69b4;
+            text-decoration: none;
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
+            transition: color 0.3s ease;
+            padding: 10px;
+            display: inline-block;
+        }
+
+        .back-link a:hover,
+        .back-link a:active {
+            color: #ff1493;
+            text-decoration: underline;
+        }
+
+        /* Tablet Responsive (768px - 1024px) */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 55px 45px;
+                max-width: 520px;
+            }
+
+            .emoji-icon {
+                font-size: 80px;
+                margin-bottom: 20px;
+            }
+
+            .btn {
+                padding: 18px 55px;
+            }
+
+            .emoji-float {
+                font-size: 35px;
+            }
+        }
+
+        /* Mobile Responsive (600px - 768px) */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            .container {
+                padding: 45px 35px;
+                border-radius: 25px;
+                max-width: 100%;
+            }
+
+            h1 {
+                margin-bottom: 15px;
+            }
+
+            .subheading {
+                margin-bottom: 12px;
+            }
+
+            .funny-text {
+                margin-bottom: 30px;
+            }
+
+            .emoji-icon {
+                font-size: 70px;
+                margin-bottom: 18px;
+            }
+
+            .warning-box {
+                padding: 18px;
+                margin-bottom: 30px;
+                border-radius: 12px;
+            }
+
+            .btn {
+                padding: 16px 45px;
+            }
+
+            .back-link {
+                margin-top: 25px;
+            }
+
+            .emoji-float {
+                font-size: 30px;
+            }
+        }
+
+        /* Small Mobile (400px - 600px) */
+        @media (max-width: 600px) {
+            body {
+                padding: 12px;
+            }
+
+            .container {
+                padding: 35px 25px;
+                border-radius: 22px;
+                border-width: 2px;
+            }
+
+            h1 {
+                margin-bottom: 12px;
+            }
+
+            .subheading {
+                margin-bottom: 10px;
+            }
+
+            .funny-text {
+                margin-bottom: 25px;
+            }
+
+            .emoji-icon {
+                font-size: 60px;
+                margin-bottom: 15px;
+            }
+
+            .warning-box {
+                padding: 15px;
+                margin-bottom: 25px;
+                border-width: 2px;
+            }
+
+            .warning-text {
+                margin-bottom: 8px;
+            }
+
+            .btn {
+                padding: 15px 40px;
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .back-link {
+                margin-top: 20px;
+            }
+
+            .emoji-float {
+                font-size: 26px;
+            }
+        }
+
+        /* Extra Small Mobile (320px - 400px) */
+        @media (max-width: 400px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 30px 20px;
+                border-radius: 20px;
+            }
+
+            h1 {
+                margin-bottom: 10px;
+            }
+
+            .funny-text {
+                margin-bottom: 20px;
+            }
+
+            .emoji-icon {
+                font-size: 50px;
+                margin-bottom: 12px;
+            }
+
+            .warning-box {
+                padding: 12px;
+                margin-bottom: 20px;
+            }
+
+            .btn {
+                padding: 14px 35px;
+            }
+
+            .back-link {
+                margin-top: 18px;
+            }
+
+            .emoji-float {
+                font-size: 22px;
+            }
+        }
+
+        /* Landscape Mode for Mobile */
+        @media (max-height: 600px) and (orientation: landscape) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 25px 30px;
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+
+            .emoji-icon {
+                font-size: 45px;
+                margin-bottom: 10px;
+            }
+
+            h1 {
+                margin-bottom: 8px;
+            }
+
+            .subheading {
+                margin-bottom: 8px;
+            }
+
+            .funny-text {
+                margin-bottom: 15px;
+            }
+
+            .warning-box {
+                padding: 12px;
+                margin-bottom: 15px;
+            }
+
+            .btn {
+                padding: 12px 35px;
+            }
+
+            .back-link {
+                margin-top: 15px;
+            }
+        }
+
+        /* Touch device optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .btn:active {
+                transform: translateY(-5px) scale(1.05);
+            }
+
+            .emoji-float {
+                animation-duration: 15s;
+            }
+        }
+
+        /* High DPI screens */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .container {
+                backdrop-filter: blur(15px);
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: linear-gradient(135deg, #3d2530 0%, #4d2535 25%, #3d2040 50%, #4d2545 75%, #3d2535 100%);
+            }
+
+            .container {
+                background: rgba(40, 25, 35, 0.95);
+                border-color: rgba(255, 105, 180, 0.5);
+            }
+
+            .warning-box {
+                background: linear-gradient(135deg, rgba(60, 40, 50, 0.8), rgba(70, 40, 55, 0.8));
+                border-color: rgba(255, 105, 180, 0.6);
+            }
+
+            .funny-text {
+                color: #ccc;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .emoji-icon {
+                animation: none;
+            }
+
+            .emoji-float {
+                animation: none;
+                opacity: 0.15;
+            }
+
+            .warning-box {
+                animation: none;
+            }
+
+            h1 {
+                animation: none;
+                color: #ff1493;
+            }
+
+            .btn {
+                animation: none;
+                background: linear-gradient(135deg, #ff1493, #ff69b4);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="bg-elements" id="bgElements"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Emoji Icon -->
+        <div class="emoji-icon">💔</div>
+
+        <!-- Main Heading -->
+        <h1>teri aiisi ki teesi</h1>
+
+        <!-- Subheading -->
+        <p class="subheading">will you be my valentine?</p>
+
+        <!-- Funny Text -->
+        <p class="funny-text">
+          han mjhe pta hai ghlti se select hogya tha 🤨<br>
+            Ek hi option hai ab... 💕
+        </p>
+
+        <!-- Warning Box -->
+        <div class="warning-box">
+            <p class="warning-text">⚠️ IMPORTANT NOTICE ⚠️</p>
+            <p class="consequence">
+                There is only ONE correct answer now!<br>
+                Choose wisely... 😏
+            </p>
+        </div>
+
+        <!-- YES ONLY Button -->
+        <a href="yes.html" class="btn">
+            <span>YES ONLY 💖</span>
+        </a>
+
+        <!-- Back Link (optional, for those who really want to go back) -->
+        <div class="back-link">
+            <a href="index.html">← Wait, let me think again...</a>
+        </div>
+    </div>
+
+    <script>
+        // Detect if device is mobile
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // Create floating emojis in background
+        function createFloatingEmojis() {
+            if (prefersReducedMotion) return;
+
+            const bgElements = document.getElementById('bgElements');
+            const emojis = ['😤', '💔', '😠', '🙄', '😏', '💕', '❤️'];
+            
+            // Reduce emoji count on mobile
+            const emojiCount = isMobile ? 10 : 15;
+            
+            // Create initial emojis
+            for (let i = 0; i < emojiCount; i++) {
+                const emoji = document.createElement('div');
+                emoji.classList.add('emoji-float');
+                emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                emoji.style.left = Math.random() * 100 + '%';
+                emoji.style.top = Math.random() * 100 + '%';
+                emoji.style.animationDelay = Math.random() * 5 + 's';
+                emoji.style.animationDuration = (Math.random() * 5 + 8) + 's';
+                bgElements.appendChild(emoji);
+            }
+        }
+
+        // Create confetti effect on button interaction
+        const btn = document.querySelector('.btn');
+        
+        function createConfettiEffect() {
+            if (prefersReducedMotion) return;
+
+            const confettiCount = isMobile ? 12 : 20;
+            
+            for (let i = 0; i < confettiCount; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = ['#ff69b4', '#ff1493', '#ffc0cb', '#ffb6c1'][Math.floor(Math.random() * 4)];
+                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    document.body.appendChild(confetti);
+
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 50);
+            }
+        }
+
+        // Handle both mouse and touch events
+        btn.addEventListener('mouseenter', createConfettiEffect);
+        btn.addEventListener('touchstart', createConfettiEffect, { passive: true });
+
+        // Add click/touch effect to button
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            if (!prefersReducedMotion) {
+                // Create hearts explosion
+                const heartCount = isMobile ? 20 : 30;
+                const clientX = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : window.innerWidth / 2);
+                const clientY = e.clientY || (e.touches && e.touches[0] ? e.touches[0].clientY : window.innerHeight / 2);
+                
+                for (let i = 0; i < heartCount; i++) {
+                    const heart = document.createElement('div');
+                    heart.textContent = '💖';
+                    heart.style.position = 'fixed';
+                    heart.style.left = clientX + 'px';
+                    heart.style.top = clientY + 'px';
+                    heart.style.fontSize = isMobile ? '16px' : '20px';
+                    heart.style.pointerEvents = 'none';
+                    heart.style.zIndex = '10000';
+                    
+                    const angle = (Math.PI * 2 * i) / heartCount;
+                    const velocity = Math.random() * 100 + 50;
+                    const xVel = Math.cos(angle) * velocity;
+                    const yVel = Math.sin(angle) * velocity;
+                    
+                    heart.style.animation = `explode-${i} ${Math.random() * 0.5 + 1}s ease-out forwards`;
+                    
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        @keyframes explode-${i} {
+                            to {
+                                transform: translate(${xVel}px, ${yVel}px) scale(0);
+                                opacity: 0;
+                            }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                    
+                    document.body.appendChild(heart);
+                    setTimeout(() => {
+                        heart.remove();
+                        style.remove();
+                    }, 2000);
+                }
+            }
+
+            // Navigate after animation
+            setTimeout(() => {
+                window.location.href = this.href;
+            }, prefersReducedMotion ? 0 : 300);
+        });
+
+        // Prevent iOS zoom on double tap
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+        // Handle orientation change
+        window.addEventListener('orientationchange', function() {
+            setTimeout(() => {
+                window.scrollTo(0, 0);
+            }, 100);
+        });
+
+        // Initialize
+        createFloatingEmojis();
+
+        // Shake the container slightly on load
+        window.addEventListener('load', function() {
+            const container = document.querySelector('.container');
+            setTimeout(() => {
+                container.style.animation = 'shake-in 0.6s ease-in-out';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
